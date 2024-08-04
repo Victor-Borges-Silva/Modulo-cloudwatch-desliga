@@ -25,5 +25,6 @@ variable "lambda_function_name_desliga" {
 }
 
 variable "aws_region_desliga" {
-  default = "sa-east-1"
+  type    = string
+  default = "us-west-1"
 }
