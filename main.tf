@@ -1,16 +1,15 @@
 resource "aws_cloudwatch_event_rule" "DesligaEC2" {
   name                = var.cloudwatch_desliga_name
-  schedule_expression = "cron(0 8 ? * MON-FRI *)"
-  state               = "ENABLED"
+  schedule_expression = var.agendamento_cron
+  state               = var.estado
   description         = var.cloudwatch_desliga_description
-  event_bus_name      = "default"
+  event_bus_name      = var.evento_cloudwatch
 }
 
 resource "aws_cloudwatch_event_target" "DesligaEC2_target" {
   rule      = aws_cloudwatch_event_rule.DesligaEC2.name
-  target_id = "Funcao_Lambda_DesligaEC2"
-  #arn       = "arn:aws:lambda:${var.aws_region_desliga}:${data.aws_caller_identity.current.account_id}:function:DesligaEC2"
-  arn = var.lambda_function_arn_desliga
+  target_id = var.nome_alvo
+  arn       = var.lambda_function_arn_desliga
 }
 
 #Permite que o EventBridge invoque a função Lambda.
